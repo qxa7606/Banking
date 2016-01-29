@@ -26,6 +26,8 @@ class HQ
 class Branch
 {
 	private:
+		unordered_map<long int, Branch> customers;
+		unordered_map<long int, Branch> employees;
 		long int id;
 		long int brMoney;
 		bool sendMoney(int);
@@ -84,6 +86,8 @@ class Customer
 {
 	private:
 		long int id;
+		Branch branch;
+		int saving, checking;
 		string firstName;
 		string lastName;
 		string email;
@@ -95,6 +99,7 @@ class Customer
 	public:
 		Customer(long int, string, string, string, string, string, string, string, int);
 		long int getId(){return id;}
+		Branch getBranch(){return branch;}
 		string getfirstName(){return firstName;}
 		string getlastName(){return lastName;}
 		string getEmail(){return email;}
@@ -103,6 +108,9 @@ class Customer
 		string getGender(){return gender;}
 		string DOB(){return DOB;}
 		int getSsn(){return ssn;}
+		int getSavings(){return saving;}
+		int getCheckings(){return checking;}
+		int getBalance(){return (saving+checking);}
 
 		bool withdrawMoney(int);
 		bool depositMoney(int);
@@ -114,11 +122,13 @@ class Transaction
 	private:
 		time_t date;
 		Employee doneBy;
+		Customer cust;
 		int moneyInvolved;
 	public:
 		Transaction(time_t, Employee, int);
 		time_t getDate(){return date;}
 		Employee getEmployee(){return doneBy;}
+		Customer getCust(){return cust;}
 		int getMoney(){return moneyInvolved;}
 };
 
