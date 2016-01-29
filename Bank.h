@@ -1,5 +1,5 @@
 #include <string>
-#include <unordered_map>
+#include <map>
 //#include <ctime>
 
 using namespace std;
@@ -8,13 +8,13 @@ class HQ
 {
 	private:
 		long int hqMoney;
-		unordered_map<long int, Branch> branches;
+		map<long int, Branch> branches;
 
 		bool sendMoney(int);
 	public:
 		HQ(long int);
 		int gethqMoney(){return hqMoney;}
-		unordered_map<long int, Branch> getBranches(){return branches;}
+		map<long int, Branch> getBranches(){return branches;}
 		
 		bool addBranch(Branch);
 		bool removeBranch(Branch);
@@ -26,14 +26,14 @@ class HQ
 class Branch
 {
 	private:
-		unordered_map<long int, Branch> customers;
-		unordered_map<long int, Branch> employees;
+		map<long int, Customer> customers;
+		map<long int, Employee> employees;
 		long int id;
 		long int brMoney;
 		bool sendMoney(int);
 	public:
 		Branch(long int, long int);
-		int getId(){return id;}
+		long int getId(){return id;}
 		int getBrMoney(){return brMoney;}
 		bool getSendMoney(){return sendMoney;}
 
@@ -41,7 +41,6 @@ class Branch
 		bool removeCustomer(Customer);
 		bool addEmployee(Employee);
 		bool removeEmployee(Employee);
-		long int getID();
 };
 
 class Employee
@@ -97,7 +96,8 @@ class Customer
 		string DOB;
 		int ssn;
 	public:
-		Customer(long int, string, string, string, string, string, string, string, int);
+		Customer(long int, Branch, int, int, string, string, string, string, string, 
+				string, string, int);
 		long int getId(){return id;}
 		Branch getBranch(){return branch;}
 		string getfirstName(){return firstName;}
@@ -112,8 +112,10 @@ class Customer
 		int getCheckings(){return checking;}
 		int getBalance(){return (saving+checking);}
 
-		bool withdrawMoney(int);
-		bool depositMoney(int);
+		bool withdrawChecking(int);
+		bool depositChecking(int);
+		bool withdrawSaving(int);
+		bool withdrawSaving(int);
 		int checkBalance();	
 };
 
@@ -125,7 +127,7 @@ class Transaction
 		Customer cust;
 		int moneyInvolved;
 	public:
-		Transaction(time_t, Employee, int);
+		Transaction(time_t, Employee, Customer, int);
 		time_t getDate(){return date;}
 		Employee getEmployee(){return doneBy;}
 		Customer getCust(){return cust;}
