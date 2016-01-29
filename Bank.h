@@ -1,17 +1,21 @@
 #include <string>
 #include <unordered_map>
+//#include <ctime>
 
 using namespace std;
 
 class HQ
 {
 	private:
-		long int hqmMoney;
+		long int hqMoney;
 		unordered_map<long int, Branch> branches;
 
 		bool sendMoney(int);
 	public:
 		HQ(long int);
+		int gethqMoney(){return hqMoney;}
+		unordered_map<long int, Branch> getBranches(){return branches;}
+		
 		bool addBranch(Branch);
 		bool removeBranch(Branch);
 		bool requestMoney(int);
@@ -27,6 +31,10 @@ class Branch
 		bool sendMoney(int);
 	public:
 		Branch(long int, long int);
+		int getId(){return id;}
+		int getBrMoney(){return brMoney;}
+		bool getSendMoney(){return sendMoney;}
+
 		bool addCustomer(Customer);
 		bool removeCustomer(Customer);
 		bool addEmployee(Employee);
@@ -38,7 +46,8 @@ class Employee
 {
 	private:
 		long int id;
-		Branch br;
+		Branch branch;
+		time_t employeeSince;
 		string firstName;
 		string lastName;
 		int salary;
@@ -50,6 +59,22 @@ class Employee
 		string DOB;
 		int ssn;
 	public:
+		Employee(long int, Branch, time_t, string, string, int, 
+			string, string, string, string, string, string, int);	
+		long int getId(){return id;}
+		Branch getBranch(){return branch;}
+		time_t getEmployeeSince(){return employeeSince;}
+		string getFirstName(){return firstname;}
+		string getLastName(){return lastname;}
+		int getSalary(){return salary;}
+		string getPosition(){return position;}
+		string getEmail(){return email;}
+		string getUsername(){return username;}
+		string getPassword(){return password;}
+		string getGender(){return gender;}
+		string getDOB(){return DOB;}
+		int getSsn(){return ssn;}
+
 		bool addCustomer(Customer);
 		bool removeCustomer(Customer);
 		
@@ -68,6 +93,17 @@ class Customer
 		string DOB;
 		int ssn;
 	public:
+		Customer(long int, string, string, string, string, string, string, string, int);
+		long int getId(){return id;}
+		string getfirstName(){return firstName;}
+		string getlastName(){return lastName;}
+		string getEmail(){return email;}
+		string getUsername(){return username;}
+		string getPassword(){return password;}
+		string getGender(){return gender;}
+		string DOB(){return DOB;}
+		int getSsn(){return ssn;}
+
 		bool withdrawMoney(int);
 		bool depositMoney(int);
 		int checkBalance();	
@@ -76,23 +112,15 @@ class Customer
 class Transaction
 {
 	private:
-		string date;	
-
-
+		time_t date;
+		Employee doneBy;
+		int moneyInvolved;
+	public:
+		Transaction(time_t, Employee, int);
+		time_t getDate(){return date;}
+		Employee getEmployee(){return doneBy;}
+		int getMoney(){return moneyInvolved;}
 };
 
 
-class Bank
-{
-	private:
-		int year;
-		string color;
-		string brand;
-	private:
-		Bank(int year=2012, string color="Green", string brand="Chevy");
-		int getYear(){return year;}
-		string getColor(){return color;}
-		string getBrand(){return brand;}
-		void setYear(int);
-		void setColor(string);
-};
+
